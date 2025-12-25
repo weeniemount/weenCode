@@ -1,0 +1,43 @@
+{
+  "name": "couch2048-vscode",
+  "publisher": "weeniemount",
+  "displayName": "Couch 2048",
+  "description": "Couch 2048, for VS Code. Im (not) sorry",
+  "version": "1.0.0",
+  "icon": "src/images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weeniemount/couch2048-vscode.git"
+  },
+
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "/src/extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "couch2048Tab.open",
+      "title": "Couch 2048"
+    }]
+  },
+  "activationEvents": [],
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "ws": "8.18.3"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "eslint": "^9.16.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}

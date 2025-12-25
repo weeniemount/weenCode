@@ -1,0 +1,39 @@
+{
+  "name": "pissstream-vscode",
+  "publisher": "weeniemount",
+  "icon": "src/images/icon.png",
+  "displayName": "pISS Stream VS Code",
+  "description": "Displays how full the ISS's urine tank is",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weeniemount/pissstream-vscode"
+  },
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "src/extension.js",
+  "contributes": {},
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.16.0"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
