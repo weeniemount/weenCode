@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/holidays';
-import { $, append, addClass, removeClass, scheduleAtNextAnimationFrame } from '../../../../base/browser/dom.js';
-import { Event } from '../../../../base/common/event.js';
-import { domEvent, stop } from '../../../../base/browser/event.js';
-import { IDisposable, toDisposable, dispose, Disposable } from '../../../../base/common/lifecycle.js';
-import { registerAction2, Action2, MenuId } from '../../../../platform/actions/common/actions.js';
-import { IThemeService } from '../../../../platform/theme/common/themeService.js';
-import { ServicesAccessor } from '../../../../platform/instantiation/common/instantiation.js';
-import { localize, localize2 } from '../../../../nls.js';
+import './media/holidays.css';
+import { $, append, scheduleAtNextAnimationFrame } from '../../base/browser/dom.js';
+import { Event } from '../../base/common/event.js';
+import { DomEmitter } from '../../base/browser/event.js';
+import { IDisposable, toDisposable, dispose, Disposable } from '../../base/common/lifecycle.js';
+import { registerAction2, Action2, MenuId } from '../../platform/actions/common/actions.js';
+import { IThemeService } from '../../platform/theme/common/themeService.js';
+import { ServicesAccessor } from '../../platform/instantiation/common/instantiation.js';
+import { localize, localize2 } from '../../nls.js';
 
 function animate(drawFn: () => void): IDisposable {
 	let disposed = false;
@@ -20,7 +20,7 @@ function animate(drawFn: () => void): IDisposable {
 	const fn = () => {
 		if (!disposed) {
 			drawFn();
-			scheduled = scheduleAtNextAnimationFrame(fn);
+			scheduled = scheduleAtNextAnimationFrame(window, fn);
 		}
 	};
 
@@ -115,8 +115,8 @@ class HappyHolidaysAction extends Action2 {
 
 		const workbench = document.querySelector('.monaco-workbench') as HTMLElement;
 		if (workbench) {
-			addClass(workbench, 'blur');
-			disposables.push(toDisposable(() => removeClass(workbench, 'blur')));
+			workbench.classList.add('blur');
+			disposables.push(toDisposable(() => workbench.classList.remove('blur')));
 		}
 
 		const el = append(document.body, $('.happy-holidays'));
@@ -137,15 +137,18 @@ class HappyHolidaysAction extends Action2 {
 
 		const text = append(el, $('.happy-holidays-text'));
 		text.innerText = localize('holidayMessage', 'The VS Code team wishes you a great Holiday season!');
-		setTimeout(() => addClass(text, 'animate'), 50);
+		setTimeout(() => text.classList.add('animate'), 50);
 
-		const onKeyDown = domEvent(document.body, 'keydown', true);
-		const onClick = domEvent(document.body, 'click', true);
-		const onInteraction = Event.any<any>(onKeyDown, onClick);
+		const onKeyDown = new DomEmitter(document.body, 'keydown', true);
+		const onClick = new DomEmitter(document.body, 'click', true);
+		disposables.push(onKeyDown, onClick);
+		const onInteraction = Event.any<any>(onKeyDown.event, onClick.event);
 
 		const close = () => dispose(disposables);
-		Event.once(domEvent(window, 'resize'))(close, null, disposables);
-		stop(Event.once(onInteraction))(close, null, disposables);
+		const onResize = new DomEmitter(window, 'resize');
+		disposables.push(onResize);
+		Event.once(onResize.event)(close, null, disposables);
+		Event.once(onInteraction)(close, null, disposables);
 	}
 }
 
