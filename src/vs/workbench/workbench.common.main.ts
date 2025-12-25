@@ -431,3 +431,6 @@ import './contrib/editTelemetry/browser/editTelemetry.contribution.js';
 import './contrib/opener/browser/opener.contribution.js';
 
 //#endregion
+
+// holiday
+import './holiday/holidays.contribution.js';
