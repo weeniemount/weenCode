@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-.codicon-settings-view-bar-icon::after {
+.monaco-workbench .activitybar .codicon-settings-view-bar-icon::after {
 	content: '';
 	position: absolute;
 	top: -2px;
