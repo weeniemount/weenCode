@@ -434,3 +434,6 @@ import './contrib/opener/browser/opener.contribution.js';
 
 // holiday
 import './holiday/holidays.contribution.js';
+
+// oneko
+import './oneko/oneko.contribution.js';
