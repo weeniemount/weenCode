@@ -502,9 +502,7 @@ export class TerminalStickyScrollOverlay extends Disposable {
 			if (this._store.isDisposed) {
 				return;
 			}
-			this._webglAddon = this._register(new WebglAddon({
-				customGlyphs: this._terminalConfigurationService.config.customGlyphs
-			}));
+			this._webglAddon = this._register(new WebglAddon(this._terminalConfigurationService.config.customGlyphs));
 			this._stickyScrollOverlay?.loadAddon(this._webglAddon);
 		} else if (!this._shouldLoadWebgl() && this._webglAddon) {
 			this._webglAddon.dispose();
