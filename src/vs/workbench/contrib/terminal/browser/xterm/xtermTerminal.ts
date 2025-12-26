@@ -796,7 +796,7 @@ export class XtermTerminal extends Disposable implements IXtermTerminal, IDetach
 		this._webglAddonCustomGlyphs = this._terminalConfigurationService.config.customGlyphs;
 
 		const Addon = await this._xtermAddonLoader.importAddon('webgl');
-		this._webglAddon = new Addon(this._terminalConfigurationService.config.customGlyphs);
+		this._webglAddon = new Addon();
 		try {
 			this.raw.loadAddon(this._webglAddon);
 			this._logService.trace('Webgl was loaded');
