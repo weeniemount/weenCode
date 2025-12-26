@@ -12,7 +12,7 @@
 	"serverLicensePrompt": "",
 	"serverApplicationName": "weencode-server",
 	"serverDataFolderName": ".weencode-server",
-	"tunnelApplicationName": "code-tunnel-oss",
+	"tunnelApplicationName": "weencode-tunnel",
 	"win32DirName": "weenie weenCode",
 	"win32NameVersion": "weenie weenCode",
 	"win32RegValueName": "weenCode",
