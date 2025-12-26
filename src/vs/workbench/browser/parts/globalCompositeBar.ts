@@ -28,6 +28,16 @@ import { getActionBarActions } from '../../../platform/actions/browser/menuEntry
 import { IConfigurationService } from '../../../platform/configuration/common/configuration.js';
 import { IContextKeyService } from '../../../platform/contextkey/common/contextkey.js';
 import { IContextMenuService } from '../../../platform/contextview/browser/contextView.js';
+
+function getManageText(configurationService?: IConfigurationService): string {
+	if (configurationService) {
+		const turnOffHat = configurationService.getValue<boolean>('holidays.turnOffHat');
+		if (!turnOffHat) {
+			return localize('jollyManage', "Jolly Manage");
+		}
+	}
+	return localize('manage', "Manage");
+}
 import { IKeybindingService } from '../../../platform/keybinding/common/keybinding.js';
 import { ILogService } from '../../../platform/log/common/log.js';
 import { IProductService } from '../../../platform/product/common/productService.js';
@@ -603,11 +613,21 @@ export class GlobalActivityActionViewItem extends AbstractGlobalActivityActionVi
 	) {
 		const action = instantiationService.createInstance(CompositeBarAction, {
 			id: GLOBAL_ACTIVITY_ID,
-			name: localize('manage', "Manage"),
+			name: getManageText(configurationService),
 			classNames: ThemeIcon.asClassNameArray(userDataProfileService.currentProfile.icon ? ThemeIcon.fromId(userDataProfileService.currentProfile.icon) : DEFAULT_ICON)
 		});
 		super(MenuId.GlobalActivity, action, options, contextMenuActionsProvider, contextMenuAlignmentOptions, themeService, hoverService, menuService, contextMenuService, contextKeyService, configurationService, keybindingService, activityService);
 		this._register(action);
+
+		this._register(configurationService.onDidChangeConfiguration(e => {
+			if (e.affectsConfiguration('holidays.turnOffHat')) {
+				action.compositeBarActionItem = {
+					...action.compositeBarActionItem,
+					name: getManageText(configurationService)
+				};
+			}
+		}));
+
 		this._register(this.userDataProfileService.onDidChangeCurrentProfile(e => {
 			action.compositeBarActionItem = {
 				...action.compositeBarActionItem,
@@ -682,7 +702,7 @@ export class SimpleAccountActivityActionViewItem extends AccountsActivityActionV
 		@IInstantiationService instantiationService: IInstantiationService,
 		@ICommandService commandService: ICommandService
 	) {
-		super(() => simpleActivityContextMenuActions(storageService, true),
+		super(() => simpleActivityContextMenuActions(storageService, true, configurationService),
 			{
 				...options,
 				colors: theme => ({
@@ -713,7 +733,7 @@ export class SimpleGlobalActivityActionViewItem extends GlobalActivityActionView
 		@IActivityService activityService: IActivityService,
 		@IStorageService storageService: IStorageService
 	) {
-		super(() => simpleActivityContextMenuActions(storageService, false),
+		super(() => simpleActivityContextMenuActions(storageService, false, configurationService),
 			{
 				...options,
 				colors: theme => ({
@@ -726,7 +746,7 @@ export class SimpleGlobalActivityActionViewItem extends GlobalActivityActionView
 	}
 }
 
-function simpleActivityContextMenuActions(storageService: IStorageService, isAccount: boolean): IAction[] {
+function simpleActivityContextMenuActions(storageService: IStorageService, isAccount: boolean, configurationService?: IConfigurationService): IAction[] {
 	const currentElementContextMenuActions: IAction[] = [];
 	if (isAccount) {
 		currentElementContextMenuActions.push(
@@ -737,7 +757,7 @@ function simpleActivityContextMenuActions(storageService: IStorageService, isAcc
 	return [
 		...currentElementContextMenuActions,
 		toAction({ id: 'toggle.hideAccounts', label: localize('accounts', "Accounts"), checked: isAccountsActionVisible(storageService), run: () => setAccountsActionVisible(storageService, !isAccountsActionVisible(storageService)) }),
-		toAction({ id: 'toggle.hideManage', label: localize('manage', "Manage"), checked: true, enabled: false, run: () => { throw new Error('"Manage" can not be hidden'); } })
+		toAction({ id: 'toggle.hideManage', label: getManageText(configurationService), checked: true, enabled: false, run: () => { throw new Error('"Manage" can not be hidden'); } })
 	];
 }
 

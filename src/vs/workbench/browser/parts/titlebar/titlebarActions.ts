@@ -15,6 +15,18 @@ import { IAction } from '../../../../base/common/actions.js';
 import { IsMainWindowFullscreenContext, IsCompactTitleBarContext, TitleBarStyleContext, TitleBarVisibleContext } from '../../../common/contextkeys.js';
 import { CustomTitleBarVisibility, TitleBarSetting, TitlebarStyle } from '../../../../platform/window/common/window.js';
 
+// Helper function to get the appropriate manage text based on holidays setting
+export function getManageText(configurationService?: IConfigurationService): string {
+	if (configurationService) {
+		const turnOffHat = configurationService.getValue<boolean>('holidays.turnOffHat');
+		// Show "Jolly Manage" when the hat is ON (turnOffHat is false)
+		if (!turnOffHat) {
+			return localize('jollyManage', "Jolly Manage");
+		}
+	}
+	return localize('manage', "Manage");
+}
+
 // --- Context Menu Actions --- //
 
 export class ToggleTitleBarConfigAction extends Action2 {
@@ -268,11 +280,16 @@ export const ACCOUNTS_ACTIVITY_TILE_ACTION: IAction = {
 	run: function (): void { }
 };
 
-export const GLOBAL_ACTIVITY_TITLE_ACTION: IAction = {
-	id: GLOBAL_ACTIVITY_ID,
-	label: localize('manage', "Manage"),
-	tooltip: localize('manage', "Manage"),
-	class: undefined,
-	enabled: true,
-	run: function (): void { }
-};
+export function createGlobalActivityTitleAction(configurationService?: IConfigurationService): IAction {
+	const manageText = getManageText(configurationService);
+	return {
+		id: GLOBAL_ACTIVITY_ID,
+		label: manageText,
+		tooltip: manageText,
+		class: undefined,
+		enabled: true,
+		run: function (): void { }
+	};
+}
+
+export const GLOBAL_ACTIVITY_TITLE_ACTION: IAction = createGlobalActivityTitleAction();
