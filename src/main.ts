@@ -71,15 +71,7 @@ Menu.setApplicationMenu(null);
 
 // Configure crash reporter
 perf.mark('code/willStartCrashReporter');
-// If a crash-reporter-directory is specified we store the crash reports
-// in the specified directory and don't upload them to the crash server.
-//
-// Appcenter crash reporting is enabled if
-// * enable-crash-reporter runtime argument is set to 'true'
-// * --disable-crash-reporter command line parameter is not set
-//
-// Disable crash reporting in all other cases.
-if (args['crash-reporter-directory'] || (argvConfig['enable-crash-reporter'] && !args['disable-crash-reporter'])) {
+if (args['crash-reporter-directory']) {
 	configureCrashReporter();
 }
 perf.mark('code/didStartCrashReporter');

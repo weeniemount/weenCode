@@ -19,7 +19,7 @@ configurationRegistry.registerConfiguration({
 		'update.mode': {
 			type: 'string',
 			enum: ['none', 'manual', 'start', 'default'],
-			default: 'default',
+			default: 'manual',
 			scope: ConfigurationScope.APPLICATION,
 			description: localize('updateMode', "Configure whether you receive automatic updates. Requires a restart after change. The updates are fetched from a Microsoft online service."),
 			tags: ['usesOnlineServices'],
@@ -65,7 +65,7 @@ configurationRegistry.registerConfiguration({
 		},
 		'update.enableWindowsBackgroundUpdates': {
 			type: 'boolean',
-			default: true,
+			default: false,
 			scope: ConfigurationScope.APPLICATION,
 			title: localize('enableWindowsBackgroundUpdatesTitle', "Enable Background Updates on Windows"),
 			description: localize('enableWindowsBackgroundUpdates', "Enable to download and install new VS Code versions in the background on Windows."),
@@ -73,7 +73,7 @@ configurationRegistry.registerConfiguration({
 		},
 		'update.showReleaseNotes': {
 			type: 'boolean',
-			default: true,
+			default: false,
 			scope: ConfigurationScope.APPLICATION,
 			description: localize('showReleaseNotes', "Show Release Notes after an update. The Release Notes are fetched from a Microsoft online service."),
 			tags: ['usesOnlineServices']

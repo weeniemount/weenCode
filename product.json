@@ -36,6 +36,12 @@
 		"serviceUrl": "https://open-vsx.org/vscode/gallery",
 		"itemUrl": "https://open-vsx.org/vscode/item"
 	},
+	"enableTelemetry": false,
+	"removeTelemetryMachineId": true,
+	"enabledTelemetryLevels": {
+		"error": false,
+		"usage": false
+	},
 	"builtInExtensions": [
 		{
 			"name": "ms-vscode.js-debug-companion",

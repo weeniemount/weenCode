@@ -65,8 +65,8 @@ export class TelemetryService implements ITelemetryService {
 		this.msftInternal = this._commonProperties['common.msftInternal'] as boolean | undefined;
 
 		this._piiPaths = config.piiPaths || [];
-		this._telemetryLevel = TelemetryLevel.USAGE;
-		this._sendErrorTelemetry = !!config.sendErrorTelemetry;
+		this._telemetryLevel = TelemetryLevel.NONE;
+		this._sendErrorTelemetry = false;
 
 		// static cleanup pattern for: `vscode-file:///DANGEROUS/PATH/resources/app/Useful/Information`
 		this._cleanupPatterns = [/(vscode-)?file:\/\/.*?\/resources\/app\//gi];
@@ -218,7 +218,7 @@ configurationRegistry.registerConfiguration({
 				localize('telemetry.telemetryLevel.off', "Disables all product telemetry.")
 			],
 			'markdownDescription': getTelemetryLevelSettingDescription(),
-			'default': TelemetryConfiguration.ON,
+			'default': TelemetryConfiguration.OFF,
 			'restricted': true,
 			'scope': ConfigurationScope.APPLICATION,
 			'tags': ['usesOnlineServices', 'telemetry'],
@@ -254,7 +254,7 @@ configurationRegistry.registerConfiguration({
 		},
 		'telemetry.feedback.enabled': {
 			type: 'boolean',
-			default: true,
+			default: false,
 			description: localize('telemetry.feedback.enabled', "Enable feedback mechanisms such as the issue reporter, surveys, and other feedback options."),
 			policy: {
 				name: 'EnableFeedback',
@@ -270,7 +270,7 @@ configurationRegistry.registerConfiguration({
 				!product.privacyStatementUrl ?
 					localize('telemetry.enableTelemetry', "Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made.", product.nameLong) :
 					localize('telemetry.enableTelemetryMd', "Enable diagnostic data to be collected. This helps us to better understand how {0} is performing and where improvements need to be made. [Read more]({1}) about what we collect and our privacy statement.", product.nameLong, product.privacyStatementUrl),
-			'default': true,
+			'default': false,
 			'restricted': true,
 			'markdownDeprecationMessage': localize('enableTelemetryDeprecated', "If this setting is false, no telemetry will be sent regardless of the new setting's value. Deprecated in favor of the {0} setting.", `\`#${TELEMETRY_SETTING_ID}#\``),
 			'scope': ConfigurationScope.APPLICATION,

@@ -93,11 +93,7 @@ export interface URIDescriptor {
  * @returns false - telemetry is completely disabled, true - telemetry is logged locally, but may not be sent
  */
 export function supportsTelemetry(productService: IProductService, environmentService: IEnvironmentService): boolean {
-	// If it's OSS and telemetry isn't disabled via the CLI we will allow it for logging only purposes
-	if (!environmentService.isBuilt && !environmentService.disableTelemetry) {
-		return true;
-	}
-	return !(environmentService.disableTelemetry || !productService.enableTelemetry);
+	return false;
 }
 
 /**
