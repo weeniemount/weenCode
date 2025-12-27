@@ -303,6 +303,7 @@ class OnekoManager extends Disposable {
 const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 configurationRegistry.registerConfiguration({
 	id: 'weencode',
+	order: 1,
 	title: localize('weencodeConfigurationTitle', 'Weencode'),
 	type: 'object',
 	properties: {

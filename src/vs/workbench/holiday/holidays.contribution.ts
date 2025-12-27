@@ -363,6 +363,7 @@ registerAction2(HappyHolidaysAction);
 const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 configurationRegistry.registerConfiguration({
 	id: 'holidays',
+	order: 2,
 	title: localize('holidaysConfigurationTitle', 'Holidays'),
 	type: 'object',
 	properties: {
