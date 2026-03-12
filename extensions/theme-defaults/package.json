@@ -60,6 +60,12 @@
         "label": "%lightHcColorThemeLabel%",
         "uiTheme": "hc-light",
         "path": "./themes/hc_light.json"
+      },
+      {
+        "id": "Hotdog Stand",
+        "label": "Hotdog Stand",
+        "uiTheme": "vs-dark",
+        "path": "./themes/hotdog_stand.json"
       }
     ],
     "iconThemes": [
