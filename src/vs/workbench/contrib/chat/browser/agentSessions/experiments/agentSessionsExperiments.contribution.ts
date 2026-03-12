@@ -241,10 +241,12 @@ registerAction2(ToggleUnifiedAgentsBarAction);
 registerSingleton(IAgentSessionProjectionService, AgentSessionProjectionService, InstantiationType.Delayed);
 registerSingleton(IAgentTitleBarStatusService, AgentTitleBarStatusService, InstantiationType.Delayed);
 
-registerWorkbenchContribution2(AgentTitleBarStatusRendering.ID, AgentTitleBarStatusRendering, WorkbenchPhase.AfterRestored);
+// DISABLED: Agent title bar status widget
+// registerWorkbenchContribution2(AgentTitleBarStatusRendering.ID, AgentTitleBarStatusRendering, WorkbenchPhase.AfterRestored);
 registerWorkbenchContribution2(AgentSessionReadyContribution.ID, AgentSessionReadyContribution, WorkbenchPhase.AfterRestored);
 
-// Register Agent Status as a menu item in the command center (alongside the search box, not replacing it)
+// DISABLED: Register Agent Status as a menu item in the command center (alongside the search box, not replacing it)
+/*
 MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
 	submenu: MenuId.AgentsTitleBarControlMenu,
 	title: localize('agentsControl', "Agents"),
@@ -308,5 +310,6 @@ MenuRegistry.appendMenuItem(MenuId.AgentsTitleBarControlMenu, {
 	group: 'z_experimental',
 	order: 10
 });
+*/
 
 //#endregion

@@ -20,6 +20,8 @@ const agentSessionsViewIcon = registerIcon('chat-sessions-icon', Codicon.comment
 const AGENT_SESSIONS_VIEW_TITLE = localize2('agentSessions.view.label', "Sessions");
 const SessionsContainerId = 'agentic.workbench.view.sessionsContainer';
 
+// DISABLED: Agents/Sessions view container
+/*
 const agentSessionsViewContainer: ViewContainer = Registry.as<IViewContainersRegistry>(ViewContainerExtensions.ViewContainersRegistry).registerViewContainer({
 	id: SessionsContainerId,
 	title: AGENT_SESSIONS_VIEW_TITLE,
@@ -46,5 +48,6 @@ const agentSessionsViewDescriptor: IViewDescriptor = {
 Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry).registerViews([agentSessionsViewDescriptor], agentSessionsViewContainer);
 
 registerWorkbenchContribution2(SessionsTitleBarContribution.ID, SessionsTitleBarContribution, WorkbenchPhase.AfterRestored);
+*/
 
 registerSingleton(ISessionsManagementService, SessionsManagementService, InstantiationType.Delayed);
