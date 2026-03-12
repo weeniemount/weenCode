@@ -449,3 +449,6 @@ import './holiday/holidays.contribution.js';
 
 // oneko
 import './oneko/oneko.contribution.js';
+
+// physics
+import './physics/physics.contribution.js';

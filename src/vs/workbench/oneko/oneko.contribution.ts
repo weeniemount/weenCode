@@ -311,6 +311,11 @@ configurationRegistry.registerConfiguration({
 			type: 'boolean',
 			default: false,
 			description: localize('weencodeOneko', 'cat follow mouse (real)')
+		},
+		'weencode.physics': {
+			type: 'boolean',
+			default: false,
+			description: localize('weencodePhysics', 'turn on physics (makes UI elements fall and bounce)')
 		}
 	}
 });
