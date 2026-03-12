@@ -31,7 +31,7 @@ import { IContextMenuService } from '../../../platform/contextview/browser/conte
 
 function getManageText(configurationService?: IConfigurationService): string {
 	if (configurationService) {
-		const turnOffHat = configurationService.getValue<boolean>('holidays.turnOffHat');
+		const turnOffHat = configurationService.getValue<boolean>('weencode.holidays.turnOffHat');
 		if (!turnOffHat) {
 			return localize('jollyManage', "Jolly Manage");
 		}
@@ -620,7 +620,7 @@ export class GlobalActivityActionViewItem extends AbstractGlobalActivityActionVi
 		this._register(action);
 
 		this._register(configurationService.onDidChangeConfiguration(e => {
-			if (e.affectsConfiguration('holidays.turnOffHat')) {
+			if (e.affectsConfiguration('weencode.holidays.turnOffHat')) {
 				action.compositeBarActionItem = {
 					...action.compositeBarActionItem,
 					name: getManageText(configurationService)

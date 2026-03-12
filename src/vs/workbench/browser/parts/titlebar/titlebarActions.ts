@@ -19,7 +19,7 @@ import { NotificationsPosition, NotificationsSettings } from '../../../common/no
 // Helper function to get the appropriate manage text based on holidays setting
 export function getManageText(configurationService?: IConfigurationService): string {
 	if (configurationService) {
-		const turnOffHat = configurationService.getValue<boolean>('holidays.turnOffHat');
+		const turnOffHat = configurationService.getValue<boolean>('weencode.holidays.turnOffHat');
 		// Show "Jolly Manage" when the hat is ON (turnOffHat is false)
 		if (!turnOffHat) {
 			return localize('jollyManage', "Jolly Manage");

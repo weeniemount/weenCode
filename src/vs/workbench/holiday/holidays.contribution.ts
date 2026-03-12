@@ -233,20 +233,20 @@ class HolidayManager extends Disposable {
 		this.updateHatVisibility();
 		this.updateSnowVisibility();
 		this._register(this.configurationService.onDidChangeConfiguration(e => {
-			if (e.affectsConfiguration('holidays.turnOffHat')) {
+			if (e.affectsConfiguration('weencode.holidays.turnOffHat')) {
 				this.updateHatVisibility();
 			}
-			if (e.affectsConfiguration('holidays.enableSnow')) {
+			if (e.affectsConfiguration('weencode.holidays.enableSnow')) {
 				this.updateSnowVisibility();
 			}
-			if (e.affectsConfiguration('holidays.snowIntensity')) {
+			if (e.affectsConfiguration('weencode.holidays.snowIntensity')) {
 				this.updateSnowIntensity();
 			}
 		}));
 	}
 
 	private updateHatVisibility(): void {
-		const turnOffHat = this.configurationService.getValue<boolean>('holidays.turnOffHat');
+		const turnOffHat = this.configurationService.getValue<boolean>('weencode.holidays.turnOffHat');
 
 		if (turnOffHat) {
 			this.hideHat();
@@ -256,7 +256,7 @@ class HolidayManager extends Disposable {
 	}
 
 	private updateSnowVisibility(): void {
-		const enableSnow = this.configurationService.getValue<boolean>('holidays.enableSnow');
+		const enableSnow = this.configurationService.getValue<boolean>('weencode.holidays.enableSnow');
 
 		if (enableSnow) {
 			this.showSnow();
@@ -266,7 +266,7 @@ class HolidayManager extends Disposable {
 	}
 
 	private updateSnowIntensity(): void {
-		const enableSnow = this.configurationService.getValue<boolean>('holidays.enableSnow');
+		const enableSnow = this.configurationService.getValue<boolean>('weencode.holidays.enableSnow');
 		if (enableSnow && this.snowCanvas) {
 			this.hideSnow();
 			this.showSnow();
@@ -297,7 +297,7 @@ class HolidayManager extends Disposable {
 			return;
 		}
 
-		const enableSnow = this.configurationService.getValue<boolean>('holidays.enableSnow');
+		const enableSnow = this.configurationService.getValue<boolean>('weencode.holidays.enableSnow');
 		if (!enableSnow) {
 			return;
 		}
@@ -322,7 +322,7 @@ class HolidayManager extends Disposable {
 		document.body.appendChild(this.snowCanvas);
 
 		const isDark = this.themeService.getColorTheme().type !== 'light';
-		const intensity = this.configurationService.getValue<number>('holidays.snowIntensity') || 1.0;
+		const intensity = this.configurationService.getValue<number>('weencode.holidays.snowIntensity') || 1.0;
 		this.snowDisposable = makeEditorSnow(this.snowCanvas, isDark, intensity);
 
 		const resizeHandler = () => {
@@ -362,22 +362,22 @@ registerAction2(HappyHolidaysAction);
 
 const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 configurationRegistry.registerConfiguration({
-	id: 'holidays',
+	id: 'weencode',
 	order: 2,
-	title: localize('holidaysConfigurationTitle', 'Holidays'),
+	title: localize('weencodeConfigurationTitle', 'weencode'),
 	type: 'object',
 	properties: {
-		'holidays.turnOffHat': {
+		'weencode.holidays.turnOffHat': {
 			type: 'boolean',
 			default: false,
 			description: localize('holidaysTurnOffHat', 'un jolly your editor')
 		},
-		'holidays.enableSnow': {
+		'weencode.holidays.enableSnow': {
 			type: 'boolean',
 			default: false,
 			description: localize('holidaysEnableSnow', 'make it snow!')
 		},
-		'holidays.snowIntensity': {
+		'weencode.holidays.snowIntensity': {
 			type: 'number',
 			default: 1.0,
 			minimum: 0.1,

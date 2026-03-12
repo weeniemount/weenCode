@@ -435,6 +435,23 @@ export const tocData: ITOCEntry<string> = {
 					settings: ['security.workspace.*']
 				}
 			]
+		},
+		{
+			id: 'weencode',
+			label: localize('weencode', "weenCode"),
+			settings: ['weencode.*'],
+			children: [
+				{
+					id: 'weencode/oneko',
+					label: localize('oneko', "Oneko"),
+					settings: ['weencode.oneko']
+				},
+				{
+					id: 'weencode/holidays',
+					label: localize('holidays', "Holidays"),
+					settings: ['weencode.holidays.*']
+				}
+			]
 		}
 	]
 };
