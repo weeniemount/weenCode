@@ -220,6 +220,17 @@ export const startEntries: GettingStartedStartEntryContent = [
 			command: 'command:googleballsTab.open',
 		}
 	},
+	{
+		id: 'topLevelNewWorkspaceChatcouch',
+		title: localize('gettingStarted.newWorkspaceChat.title', "Couch 2048"),
+		description: localize('gettingStarted.newWorkspaceChat.description', "2048 but its on the couch"),
+		icon: Codicon.globe,
+		when: '!isWeb && !chatSetupHidden',
+		content: {
+			type: 'startEntry',
+			command: 'command:couch2048Tab.open',
+		}
+	},
 ];
 
 const Button = (title: string, href: string) => `[${title}](${href})`;
