@@ -68,13 +68,12 @@ const chatViewDescriptor: IViewDescriptor = {
 		order: 1
 	},
 	ctorDescriptor: new SyncDescriptor(ChatViewPane),
-	when: ContextKeyExpr.or(
-		ContextKeyExpr.or(
-			ChatContextKeys.Setup.hidden,
-			ChatContextKeys.Setup.disabled
-		)?.negate(),
+	when: ContextKeyExpr.and(
+		ContextKeyExpr.has('config.chat.disableAIFeatures').negate(),
+		ChatContextKeys.Setup.disabled.negate(),
+		ChatContextKeys.Setup.hidden.negate(),
 		ChatContextKeys.panelParticipantRegistered,
-		ChatContextKeys.extensionInvalid
+		ChatContextKeys.extensionInvalid.negate()
 	)
 };
 Registry.as<IViewsRegistry>(ViewExtensions.ViewsRegistry).registerViews([chatViewDescriptor], chatViewContainer);
