@@ -262,12 +262,12 @@ function createCopilotSetupStep(id: string, button: string, when: string, includ
 export const walkthroughs: GettingStartedWalkthroughContent = [
 	{
 		id: 'Setup',
-		title: localize('gettingStarted.setup.title', "Get started with weenCode"),
-		description: localize('gettingStarted.setup.description', "Customize your editor, learn the basics, and start coding"),
+		title: localize('gettingStarted.setup.title', "start coding in the weenCode ‼️"),
+		description: localize('gettingStarted.setup.description', "make yor weenCode yours "),
 		isFeatured: true,
 		icon: setupIcon,
 		when: '!isWeb',
-		walkthroughPageTitle: localize('gettingStarted.setup.walkthroughPageTitle', 'Setup weenCode'),
+		walkthroughPageTitle: localize('gettingStarted.setup.walkthroughPageTitle', 'the weenCode'),
 		next: 'Beginner',
 		content: {
 			type: 'steps',
@@ -278,8 +278,8 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				//createCopilotSetupStep('CopilotSetupSignedIn', CopilotSignedInButton, '!chatEntitlementSignedOut && (!chatSetupInstalled || chatSetupDisabled || chatPlanCanSignUp)', false),
 				{
 					id: 'pickColorTheme',
-					title: localize('gettingStarted.pickColor.title', "Choose your theme"),
-					description: localize('gettingStarted.pickColor.description.interpolated', "The right theme helps you focus on your code, is easy on your eyes, and is simply more fun to use.\n{0}", Button(localize('titleID', "Browse Color Themes"), 'command:workbench.action.selectTheme')),
+					title: localize('gettingStarted.pickColor.title', "choose a theme"),
+					description: localize('gettingStarted.pickColor.description.interpolated', "weenCode comes with Some:tm: themes, like the amazing Hotdog Stand that wont burn your eyes, trust me!\n{0}", Button(localize('titleID', "browse them themes"), 'command:workbench.action.selectTheme')),
 					completionEvents: [
 						'onSettingChanged:workbench.colorTheme',
 						'onCommand:workbench.action.selectTheme'
@@ -288,8 +288,8 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'videoTutorial',
-					title: localize('gettingStarted.videoTutorial.title', "Watch video tutorials"),
-					description: localize('gettingStarted.videoTutorial.description.interpolated', "Watch the first in a series of short & practical video tutorials for weenCode's key features.\n{0}", Button(localize('watch', "Watch Tutorial"), 'https://aka.ms/vscode-getting-started-video')),
+					title: localize('gettingStarted.videoTutorial.title', "watch a tutorial or something"),
+					description: localize('gettingStarted.videoTutorial.description.interpolated', "watch it\n{0}", Button(localize('watch', "Watch Tutorial"), 'https://aka.ms/vscode-getting-started-video')),
 					media: { type: 'svg', altText: 'weenCode Settings', path: 'learn.svg' },
 				}
 			]
@@ -298,20 +298,20 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 
 	{
 		id: 'SetupWeb',
-		title: localize('gettingStarted.setupWeb.title', "Get Started with weenCode for the Web"),
+		title: localize('gettingStarted.setupWeb.title', "start coding in the weenCode web edition ‼️"),
 		description: localize('gettingStarted.setupWeb.description', "Customize your editor, learn the basics, and start coding"),
 		isFeatured: true,
 		icon: setupIcon,
 		when: 'isWeb',
 		next: 'Beginner',
-		walkthroughPageTitle: localize('gettingStarted.setupWeb.walkthroughPageTitle', 'Setup weenCode Web'),
+		walkthroughPageTitle: localize('gettingStarted.setupWeb.walkthroughPageTitle', 'the weenCode web edition'),
 		content: {
 			type: 'steps',
 			steps: [
 				{
 					id: 'pickColorThemeWeb',
-					title: localize('gettingStarted.pickColor.title', "Choose your theme"),
-					description: localize('gettingStarted.pickColor.description.interpolated', "The right theme helps you focus on your code, is easy on your eyes, and is simply more fun to use.\n{0}", Button(localize('titleID', "Browse Color Themes"), 'command:workbench.action.selectTheme')),
+					title: localize('gettingStarted.pickColor.title', "choose a theme"),
+					description: localize('gettingStarted.pickColor.description.interpolated', "weenCode comes with Some:tm: themes, like the amazing Hotdog Stand that wont burn your eyes, trust me!\n{0}", Button(localize('titleID', "browse theme themes"), 'command:workbench.action.selectTheme')),
 					completionEvents: [
 						'onSettingChanged:workbench.colorTheme',
 						'onCommand:workbench.action.selectTheme'
@@ -329,8 +329,8 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'extensionsWebWeb',
-					title: localize('gettingStarted.extensions.title', "Code with extensions"),
-					description: localize('gettingStarted.extensionsWeb.description.interpolated', "Extensions are weenCode's power-ups. A growing number are becoming available in the web.\n{0}", Button(localize('browsePopularWeb', "Browse Popular Web Extensions"), 'command:workbench.extensions.action.showPopularExtensions')),
+					title: localize('gettingStarted.extensions.title', "weenCode with extensions"),
+					description: localize('gettingStarted.extensionsWeb.description.interpolated', "you can get extensions in the web i guess.\n{0}", Button(localize('browsePopularWeb', "Browse Popular Web Extensions"), 'command:workbench.extensions.action.showPopularExtensions')),
 					when: 'workspacePlatform == \'webworker\'',
 					media: {
 						type: 'svg', altText: 'weenCode extension marketplace with featured language extensions', path: 'extensions-web.svg'
@@ -338,8 +338,8 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'findLanguageExtensionsWeb',
-					title: localize('gettingStarted.findLanguageExts.title', "Rich support for all your languages"),
-					description: localize('gettingStarted.findLanguageExts.description.interpolated', "Code smarter with syntax highlighting, inline suggestions, linting and debugging. While many languages are built-in, many more can be added as extensions.\n{0}", Button(localize('browseLangExts', "Browse Language Extensions"), 'command:workbench.extensions.action.showLanguageExtensions')),
+					title: localize('gettingStarted.findLanguageExts.title', "rich support for all your languages"),
+					description: localize('gettingStarted.findLanguageExts.description.interpolated', "your code will look nice i guess\n{0}", Button(localize('browseLangExts', "browse language extensions"), 'command:workbench.extensions.action.showLanguageExtensions')),
 					when: 'workspacePlatform != \'webworker\'',
 					media: {
 						type: 'svg', altText: 'Language extensions', path: 'languages.svg'
@@ -347,7 +347,7 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'settingsSyncWeb',
-					title: localize('gettingStarted.settingsSync.title', "Sync settings across devices"),
+					title: localize('gettingStarted.settingsSync.title', "sync settings across devices"),
 					description: localize('gettingStarted.settingsSync.description.interpolated', "Keep your essential customizations backed up and updated across all your devices.\n{0}", Button(localize('enableSync', "Backup and Sync Settings"), 'command:workbench.userDataSync.actions.turnOn')),
 					when: 'syncStatus != uninitialized',
 					completionEvents: ['onEvent:sync-enabled'],
@@ -357,14 +357,14 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'commandPaletteTaskWeb',
-					title: localize('gettingStarted.commandPalette.title', "Unlock productivity with the Command Palette "),
-					description: localize('gettingStarted.commandPalette.description.interpolated', "Run commands without reaching for your mouse to accomplish any task in weenCode.\n{0}", Button(localize('commandPalette', "Open Command Palette"), 'command:workbench.action.showCommands')),
+					title: localize('gettingStarted.commandPalette.title', "command pallete gaming"),
+					description: localize('gettingStarted.commandPalette.description.interpolated', "press ctrl+shift+p and ran a lot of random stuff..... like google balls :3\n{0}", Button(localize('commandPalette', "command pallete gaming"), 'command:workbench.action.showCommands')),
 					media: { type: 'svg', altText: 'Command Palette overlay for searching and executing commands.', path: 'commandPalette.svg' },
 				},
 				{
 					id: 'pickAFolderTask-WebWeb',
-					title: localize('gettingStarted.setup.OpenFolder.title', "Open up your code"),
-					description: localize('gettingStarted.setup.OpenFolderWeb.description.interpolated', "You're all set to start coding. You can open a local project or a remote repository to get your files into weenCode.\n{0}\n{1}", Button(localize('openFolder', "Open Folder"), 'command:workbench.action.addRootFolder'), Button(localize('openRepository', "Open Repository"), 'command:remoteHub.openRepository')),
+					title: localize('gettingStarted.setup.OpenFolder.title', "start the coding already"),
+					description: localize('gettingStarted.setup.OpenFolderWeb.description.interpolated', "open a file or a git repo or a folder in weenCode to start coding\n{0}\n{1}", Button(localize('openFolder', "open folder"), 'command:workbench.action.addRootFolder'), Button(localize('openRepository', "Open Repository"), 'command:remoteHub.openRepository')),
 					when: 'workspaceFolderCount == 0',
 					media: {
 						type: 'svg', altText: 'Explorer view showing buttons for opening folder and cloning repository.', path: 'openFolder.svg'
@@ -372,8 +372,8 @@ export const walkthroughs: GettingStartedWalkthroughContent = [
 				},
 				{
 					id: 'quickOpenWeb',
-					title: localize('gettingStarted.quickOpen.title', "Quickly navigate between your files"),
-					description: localize('gettingStarted.quickOpen.description.interpolated', "Navigate between files in an instant with one keystroke. Tip: Open multiple files by pressing the right arrow key.\n{0}", Button(localize('quickOpen', "Quick Open a File"), 'command:toSide:workbench.action.quickOpen')),
+					title: localize('gettingStarted.quickOpen.title', "quickly navigate between your files"),
+					description: localize('gettingStarted.quickOpen.description.interpolated', "navigate between files in an instant with one keystroke. Tip: Open multiple files by pressing the right arrow key.\n{0}", Button(localize('quickOpen', "quick, open a file!!!"), 'command:toSide:workbench.action.quickOpen')),
 					when: 'workspaceFolderCount != 0',
 					media: {
 						type: 'svg', altText: 'Go to file in quick search.', path: 'search.svg'

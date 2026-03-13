@@ -1,5 +1,5 @@
 {
-	"name": "Code - OSS",
+	"name": "weenCode",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -14,8 +14,8 @@
 	"privileged": true,
 	"mounts": [
 		{
-			"source": "vscode-dev",
-			"target": "/vscode-dev",
+			"source": "weencode",
+			"target": "/weencode",
 			"type": "volume"
 		}
 	],

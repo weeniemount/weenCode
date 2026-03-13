@@ -5,11 +5,11 @@
     <key>pfm_app_url</key>
     <string>https://code.visualstudio.com/</string>
     <key>pfm_description</key>
-    <string>Code - OSS Managed Settings</string>
+    <string>weenCode Managed Settings</string>
     <key>pfm_documentation_url</key>
     <string>https://code.visualstudio.com/docs/setup/enterprise</string>
     <key>pfm_domain</key>
-    <string>com.visualstudio.code.oss</string>
+    <string>io.github.weeniemount.weenCode</string>
     <key>pfm_format_version</key>
     <integer>1</integer>
     <key>pfm_interaction</key>
@@ -22,10 +22,10 @@
     </array>
     <key>pfm_subkeys</key>
     <array>
-	
+
 		<dict>
 			<key>pfm_default</key>
-			<string>Configure Code - OSS</string>
+			<string>Configure weenCode</string>
 			<key>pfm_name</key>
 			<string>PayloadDescription</string>
 			<key>pfm_title</key>
@@ -35,7 +35,7 @@
 		</dict>
 		<dict>
 			<key>pfm_default</key>
-			<string>Code - OSS</string>
+			<string>weenCode</string>
 			<key>pfm_name</key>
 			<string>PayloadDisplayName</string>
 			<key>pfm_require</key>
@@ -47,7 +47,7 @@
 		</dict>
 		<dict>
 			<key>pfm_default</key>
-			<string>com.visualstudio.code.oss</string>
+			<string>io.github.weeniemount.weenCode</string>
 			<key>pfm_name</key>
 			<string>PayloadIdentifier</string>
 			<key>pfm_require</key>
@@ -59,7 +59,7 @@
 		</dict>
 		<dict>
 			<key>pfm_default</key>
-			<string>com.visualstudio.code.oss</string>
+			<string>io.github.weeniemount.weenCode</string>
 			<key>pfm_name</key>
 			<string>PayloadType</string>
 			<key>pfm_require</key>
@@ -111,7 +111,7 @@
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>Autorisez l’utilisation d’outils fournis par des extensions tierces.</string>
+<string>Enable using tools contributed by third-party extensions.</string>
 <key>pfm_name</key>
 <string>ChatAgentExtensionTools</string>
 <key>pfm_title</key>
@@ -122,7 +122,7 @@
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>Activez le mode Assistant pour la conversation. Lorsque cette option est activée, le mode Assistant peut être activé via la liste déroulante de la vue.</string>
+<string>Enable agent mode for chat. When this is enabled, agent mode can be activated via the dropdown in the view.</string>
 <key>pfm_name</key>
 <string>ChatAgentMode</string>
 <key>pfm_title</key>
@@ -133,7 +133,7 @@
 <key>pfm_default</key>
 <string>none</string>
 <key>pfm_description</key>
-<string>Contrôle l’accès aux serveurs de protocole de contexte du modèle.</string>
+<string>Controls access to installed Model Context Protocol servers.</string>
 <key>pfm_name</key>
 <string>ChatMCP</string>
 <key>pfm_title</key>
@@ -150,7 +150,7 @@
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>Active les fichiers d’instruction et de requête réutilisables dans les sessions Conversation.</string>
+<string>Enables reusable prompt and instruction files in Chat sessions.</string>
 <key>pfm_name</key>
 <string>ChatPromptFiles</string>
 <key>pfm_title</key>
@@ -161,9 +161,9 @@
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>L’approbation automatique globale, également appelée « mode YOLO », désactive complètement l’approbation manuelle pour tous les outils dans tous les espaces de travail, permettant à l’agent d’agir de manière totalement autonome. Ceci est extrêmement dangereux et est *jamais* recommandé, même dans des environnements conteneurisés comme [Codespaces](https://github.com/features/codespaces) et [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), où des clés utilisateur sont transférées dans le conteneur et pourraient être compromises.
+<string>Global auto approve also known as "YOLO mode" disables manual approval completely for all tools in all workspaces, allowing the agent to act fully autonomously. This is extremely dangerous and is *never* recommended, even containerized environments like Codespaces and Dev Containers have user keys forwarded into the container that could be compromised.
 
-Cette fonctionnalité désactive [les protections de sécurité critiques](https://code.visualstudio.com/docs/copilot/security) et facilite considérablement la compromission de la machine par un attaquant.</string>
+This feature disables critical security protections and makes it much easier for an attacker to compromise the machine.</string>
 <key>pfm_name</key>
 <string>ChatToolsAutoApprove</string>
 <key>pfm_title</key>
@@ -174,7 +174,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <string></string>
 <key>pfm_description</key>
-<string>Configurer l’URL du service de la galerie MCP à laquelle se connecter</string>
+<string>Configure the MCP Gallery service URL to connect to</string>
 <key>pfm_name</key>
 <string>McpGalleryServiceUrl</string>
 <key>pfm_title</key>
@@ -185,7 +185,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <string></string>
 <key>pfm_description</key>
-<string>Spécifiez une liste d’extensions autorisées. Cela permet de maintenir un environnement de développement sécurisé et cohérent en limitant l’utilisation d’extensions non autorisées. Plus d’informations : https://code.visualstudio.com/docs/setup/enterprise#_configure-allowed-extensions</string>
+<string>Specify a list of extensions that are allowed to use. This helps maintain a secure and consistent development environment by restricting the use of unauthorized extensions. More information: https://code.visualstudio.com/docs/setup/enterprise#_configure-allowed-extensions</string>
 <key>pfm_name</key>
 <string>AllowedExtensions</string>
 <key>pfm_title</key>
@@ -197,7 +197,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <string></string>
 <key>pfm_description</key>
-<string>Configurer l’URL du service Place de marché à laquelle se connecter</string>
+<string>Configure the Marketplace service URL to connect to</string>
 <key>pfm_name</key>
 <string>ExtensionGalleryServiceUrl</string>
 <key>pfm_title</key>
@@ -208,7 +208,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>Contrôle s’il faut autoriser l’approbation automatique lors de l’exécution dans l’outil terminal.</string>
+<string>Controls whether to allow auto approval in the run in terminal tool.</string>
 <key>pfm_name</key>
 <string>ChatToolsTerminalEnableAutoApprove</string>
 <key>pfm_title</key>
@@ -219,7 +219,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <false/>
 <key>pfm_description</key>
-<string>Activez les mécanismes de commentaires tels que le système de rapport de problèmes, les sondages et autres options de commentaires.</string>
+<string>Enable feedback mechanisms such as the issue reporter, surveys, and other feedback options.</string>
 <key>pfm_name</key>
 <string>EnableFeedback</string>
 <key>pfm_title</key>
@@ -230,7 +230,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <string>all</string>
 <key>pfm_description</key>
-<string>Contrôle le niveau de télémétrie.</string>
+<string>Controls the level of telemetry.</string>
 <key>pfm_name</key>
 <string>TelemetryLevel</string>
 <key>pfm_title</key>
@@ -248,7 +248,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 <key>pfm_default</key>
 <string>none</string>
 <key>pfm_description</key>
-<string>Choisissez si vous voulez recevoir des mises à jour automatiques. Nécessite un redémarrage après le changement. Les mises à jour sont récupérées auprès d'un service en ligne Microsoft.</string>
+<string>Configure whether you receive automatic updates. Requires a restart after change. The updates are fetched from a Microsoft online service.</string>
 <key>pfm_name</key>
 <string>UpdateMode</string>
 <key>pfm_title</key>
@@ -265,7 +265,7 @@ Cette fonctionnalité désactive [les protections de sécurité critiques](https
 </dict>
     </array>
     <key>pfm_title</key>
-    <string>Code - OSS</string>
+    <string>weenCode</string>
     <key>pfm_unique</key>
     <true/>
     <key>pfm_version</key>

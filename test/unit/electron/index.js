@@ -240,11 +240,11 @@ app.on('ready', () => {
 		return {
 			product: {
 				version: '1.x.y',
-				nameShort: 'Code - OSS Dev',
-				nameLong: 'Code - OSS Dev',
-				applicationName: 'code-oss',
-				dataFolderName: '.vscode-oss',
-				urlProtocol: 'code-oss',
+				nameShort: 'weenCode',
+				nameLong: 'weenCode',
+				applicationName: 'weencode',
+				dataFolderName: '.weencode',
+				urlProtocol: 'weencode',
 			}
 		};
 	});
