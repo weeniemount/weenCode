@@ -30,6 +30,8 @@ on:
 jobs:
   build-windows-installer:
     runs-on: windows-latest
+    # also disabled
+    if: false
 
     steps:
       - name: Checkout code
@@ -178,6 +180,8 @@ jobs:
 
   build-macos-universal:
     runs-on: macos-latest
+    # disabled for now
+    if: false
 
     steps:
       - name: Checkout code
@@ -228,7 +232,7 @@ jobs:
 
   upload-to-release:
     if: ${{ github.event.inputs.upload_to_release == 'true' && github.event.inputs.release_tag != '' }}
-    needs: [build-windows-installer, build-linux-deb, build-linux-rpm, build-macos-universal]
+    needs: [build-linux-deb, build-linux-rpm]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -252,9 +256,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/weenCode-Windows-x64-Installer/weenCode-usersetup.exe
             artifacts/weenCode-Linux-x64-DEB/weenCode-amd64.deb
             artifacts/weenCode-Linux-x64-RPM/weenCode-x86_64.rpm
-            artifacts/weenCode-macOS-Universal/weenCode-macOS-Universal.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
