@@ -29,7 +29,6 @@ import { IConfigurationService } from '../../../../platform/configuration/common
 import { IChatEditingService } from '../../chat/common/editing/chatEditingService.js';
 import { IChatWidgetService } from '../../chat/browser/chat.js';
 import { ChatRequestQueueKind } from '../../chat/common/chatService/chatService.js';
-import { ChatEntitlementContextKeys } from '../../../services/chat/common/chatEntitlementService.js';
 
 
 CommandsRegistry.registerCommandAlias('interactiveEditor.start', 'inlineChat.start');

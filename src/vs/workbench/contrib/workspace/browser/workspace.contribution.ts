@@ -14,8 +14,7 @@ import { IInstantiationService, ServicesAccessor } from '../../../../platform/in
 import { Severity } from '../../../../platform/notification/common/notification.js';
 import { Registry } from '../../../../platform/registry/common/platform.js';
 import { IWorkspaceTrustEnablementService, IWorkspaceTrustManagementService, IWorkspaceTrustRequestService, WorkspaceTrustUriResponse } from '../../../../platform/workspace/common/workspaceTrust.js';
-import { Extensions as WorkbenchExtensions, IWorkbenchContribution, IWorkbenchContributionsRegistry, WorkbenchPhase, registerWorkbenchContribution2 } from '../../../common/contributions.js';
-import { LifecyclePhase } from '../../../services/lifecycle/common/lifecycle.js';
+import { IWorkbenchContribution } from '../../../common/contributions.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { IEditorService, MODAL_GROUP } from '../../../services/editor/common/editorService.js';
 import { ContextKeyExpr, IContextKey, IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
@@ -27,9 +26,7 @@ import { WorkspaceTrustEditorInput } from '../../../services/workspaces/browser/
 import { WORKSPACE_TRUST_BANNER, WORKSPACE_TRUST_EMPTY_WINDOW, WORKSPACE_TRUST_ENABLED, WORKSPACE_TRUST_STARTUP_PROMPT, WORKSPACE_TRUST_UNTRUSTED_FILES } from '../../../services/workspaces/common/workspaceTrust.js';
 import { IEditorSerializer, IEditorFactoryRegistry, EditorExtensions } from '../../../common/editor.js';
 import { EditorInput } from '../../../common/editor/editorInput.js';
-import { ITelemetryService } from '../../../../platform/telemetry/common/telemetry.js';
 import { isEmptyWorkspaceIdentifier, ISingleFolderWorkspaceIdentifier, isSingleFolderWorkspaceIdentifier, IWorkspaceContextService, IWorkspaceFoldersWillChangeEvent, toWorkspaceIdentifier, WorkbenchState } from '../../../../platform/workspace/common/workspace.js';
-import { dirname, resolve } from '../../../../base/common/path.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { IMarkdownString, MarkdownString } from '../../../../base/common/htmlContent.js';
 import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
@@ -37,7 +34,6 @@ import { IHostService } from '../../../services/host/browser/host.js';
 import { IBannerItem, IBannerService } from '../../../services/banner/browser/bannerService.js';
 import { isVirtualWorkspace } from '../../../../platform/workspace/common/virtualWorkspace.js';
 import { LIST_WORKSPACE_UNSUPPORTED_EXTENSIONS_COMMAND_ID } from '../../extensions/common/extensions.js';
-import { IWorkbenchEnvironmentService } from '../../../services/environment/common/environmentService.js';
 import { WORKSPACE_TRUST_SETTING_TAG } from '../../preferences/common/preferences.js';
 import { IPreferencesService } from '../../../services/preferences/common/preferences.js';
 import { ILabelService, Verbosity } from '../../../../platform/label/common/label.js';
@@ -816,124 +812,6 @@ Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration)
 		}
 	});
 
-class WorkspaceTrustTelemetryContribution extends Disposable implements IWorkbenchContribution {
-	constructor(
-		@IWorkbenchEnvironmentService private readonly environmentService: IWorkbenchEnvironmentService,
-		@ITelemetryService private readonly telemetryService: ITelemetryService,
-		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
-		@IWorkspaceTrustEnablementService private readonly workspaceTrustEnablementService: IWorkspaceTrustEnablementService,
-		@IWorkspaceTrustManagementService private readonly workspaceTrustManagementService: IWorkspaceTrustManagementService,
-	) {
-		super();
-
-		this.workspaceTrustManagementService.workspaceTrustInitialized
-			.then(() => {
-				this.logInitialWorkspaceTrustInfo();
-				this.logWorkspaceTrust(this.workspaceTrustManagementService.isWorkspaceTrusted());
-
-				this._register(this.workspaceTrustManagementService.onDidChangeTrust(isTrusted => this.logWorkspaceTrust(isTrusted)));
-			});
-	}
-
-	private logInitialWorkspaceTrustInfo(): void {
-		if (!this.workspaceTrustEnablementService.isWorkspaceTrustEnabled()) {
-			const disabledByCliFlag = this.environmentService.disableWorkspaceTrust;
-
-			type WorkspaceTrustDisabledEventClassification = {
-				owner: 'sbatten';
-				comment: 'Logged when workspace trust is disabled';
-				reason: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The reason workspace trust is disabled. e.g. cli or setting' };
-			};
-
-			type WorkspaceTrustDisabledEvent = {
-				reason: 'setting' | 'cli';
-			};
-
-			this.telemetryService.publicLog2<WorkspaceTrustDisabledEvent, WorkspaceTrustDisabledEventClassification>('workspaceTrustDisabled', {
-				reason: disabledByCliFlag ? 'cli' : 'setting'
-			});
-			return;
-		}
-
-		type WorkspaceTrustInfoEventClassification = {
-			owner: 'sbatten';
-			comment: 'Information about the workspaces trusted on the machine';
-			trustedFoldersCount: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The number of trusted folders on the machine' };
-		};
-
-		type WorkspaceTrustInfoEvent = {
-			trustedFoldersCount: number;
-		};
-
-		this.telemetryService.publicLog2<WorkspaceTrustInfoEvent, WorkspaceTrustInfoEventClassification>('workspaceTrustFolderCounts', {
-			trustedFoldersCount: this.workspaceTrustManagementService.getTrustedUris().length,
-		});
-	}
-
-	private async logWorkspaceTrust(isTrusted: boolean): Promise<void> {
-		if (!this.workspaceTrustEnablementService.isWorkspaceTrustEnabled()) {
-			return;
-		}
-
-		type WorkspaceTrustStateChangedEvent = {
-			workspaceId: string;
-			isTrusted: boolean;
-		};
-
-		type WorkspaceTrustStateChangedEventClassification = {
-			owner: 'sbatten';
-			comment: 'Logged when the workspace transitions between trusted and restricted modes';
-			workspaceId: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'An id of the workspace' };
-			isTrusted: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'true if the workspace is trusted' };
-		};
-
-		this.telemetryService.publicLog2<WorkspaceTrustStateChangedEvent, WorkspaceTrustStateChangedEventClassification>('workspaceTrustStateChanged', {
-			workspaceId: this.workspaceContextService.getWorkspace().id,
-			isTrusted: isTrusted
-		});
-
-		if (isTrusted) {
-			type WorkspaceTrustFolderInfoEventClassification = {
-				owner: 'sbatten';
-				comment: 'Some metrics on the trusted workspaces folder structure';
-				trustedFolderDepth: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The number of directories deep of the trusted path' };
-				workspaceFolderDepth: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The number of directories deep of the workspace path' };
-				delta: { classification: 'SystemMetaData'; purpose: 'FeatureInsight'; comment: 'The difference between the trusted path and the workspace path directories depth' };
-			};
-
-			type WorkspaceTrustFolderInfoEvent = {
-				trustedFolderDepth: number;
-				workspaceFolderDepth: number;
-				delta: number;
-			};
-
-			const getDepth = (folder: string): number => {
-				let resolvedPath = resolve(folder);
-
-				let depth = 0;
-				while (dirname(resolvedPath) !== resolvedPath && depth < 100) {
-					resolvedPath = dirname(resolvedPath);
-					depth++;
-				}
-
-				return depth;
-			};
-
-			for (const folder of this.workspaceContextService.getWorkspace().folders) {
-				const { trusted, uri } = await this.workspaceTrustManagementService.getUriTrustInfo(folder.uri);
-				if (!trusted) {
-					continue;
-				}
-
-				const workspaceFolderDepth = getDepth(folder.uri.fsPath);
-				const trustedFolderDepth = getDepth(uri.fsPath);
-				const delta = workspaceFolderDepth - trustedFolderDepth;
-
-				this.telemetryService.publicLog2<WorkspaceTrustFolderInfoEvent, WorkspaceTrustFolderInfoEventClassification>('workspaceFolderDepthBelowTrustedFolder', { workspaceFolderDepth, trustedFolderDepth, delta });
-			}
-		}
-	}
-}
 
 // Registry.as<IWorkbenchContributionsRegistry>(WorkbenchExtensions.Workbench)
 // 	.registerWorkbenchContribution(WorkspaceTrustTelemetryContribution, LifecyclePhase.Restored);
