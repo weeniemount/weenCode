@@ -50,7 +50,7 @@ export namespace ThemeSettingDefaults {
 	export const COLOR_THEME_DARK_OLD = 'Default Dark+';
 	export const COLOR_THEME_LIGHT_OLD = 'Default Light+';
 
-	export const FILE_ICON_THEME = 'vs-seti';
+	export const FILE_ICON_THEME = 'vscode-icons';
 	export const PRODUCT_ICON_THEME = 'Default';
 }
 

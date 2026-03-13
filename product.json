@@ -84,6 +84,38 @@
 				},
 				"publisherDisplayName": "Microsoft"
 			}
+		},
+		{
+			"name": "vscode-icons-team.vscode-icons",
+			"version": "12.9.0",
+			"sha256": "50b8d995b19c55b3e2a247e7c7b778cfb72655511fcb677e494721f34ad9440e",
+			"repo": "https://github.com/vscode-icons/vscode-icons",
+			"metadata": {
+				"id": "9ccc1dd7-7ec4-4a46-bd4f-7d7b8b9d322a",
+				"publisherId": {
+					"publisherId": "vscode-icons-team",
+					"publisherName": "vscode-icons-team",
+					"displayName": "VSCode Icons Team",
+					"flags": "verified"
+				},
+				"publisherDisplayName": "VSCode Icons Team"
+			}
+		},
+		{
+			"name": "ms-vscode.live-server",
+			"version": "0.4.14",
+			"sha256": "35183d87f46f02c2e9f8a5281ec400cf466cda4ec1a96671c166f6362b9f4477",
+			"repo": "https://github.com/microsoft/vscode-livepreview",
+			"metadata": {
+				"id": "5c4c7f17-37fd-4e64-9f4e-a3e06e2e4c1e",
+				"publisherId": {
+					"publisherId": "ms-vscode",
+					"publisherName": "ms-vscode",
+					"displayName": "Microsoft",
+					"flags": "verified"
+				},
+				"publisherDisplayName": "Microsoft"
+			}
 		}
 	],
 	"defaultChatAgent": {
