@@ -2,10 +2,14 @@ import { Disposable } from '../../base/common/lifecycle.js';
 import { IWorkbenchContribution } from '../common/contributions.js';
 import { IConfigurationService } from '../../platform/configuration/common/configuration.js';
 import { getActiveWindow } from '../../base/browser/dom.js';
+import { registerAction2, Action2 } from '../../platform/actions/common/actions.js';
+import { ServicesAccessor } from '../../platform/instantiation/common/instantiation.js';
+import { localize2 } from '../../nls.js';
 
 class PhysicsContribution extends Disposable implements IWorkbenchContribution {
 
 	static readonly ID = 'workbench.contrib.physics';
+	private static instance: PhysicsContribution | null = null;
 
 	private physicsElements: Array<{
 		element: HTMLElement;
@@ -26,6 +30,7 @@ class PhysicsContribution extends Disposable implements IWorkbenchContribution {
 	}> = [];
 	private animationFrame: number | null = null;
 	private enabled = false;
+	private sessionOverride: boolean | null = null;
 	private draggedElement: any = null;
 	private domObserver: MutationObserver | null = null;
 	private settingsObserver: MutationObserver | null = null;
@@ -35,6 +40,7 @@ class PhysicsContribution extends Disposable implements IWorkbenchContribution {
 		@IConfigurationService private readonly configurationService: IConfigurationService
 	) {
 		super();
+		PhysicsContribution.instance = this;
 
 		this.updatePhysicsState();
 		this._register(this.configurationService.onDidChangeConfiguration(e => {
@@ -46,8 +52,24 @@ class PhysicsContribution extends Disposable implements IWorkbenchContribution {
 		this.startSettingsObserver();
 	}
 
+	public togglePhysics(): void {
+		if (this.sessionOverride === null) {
+			const configValue = this.configurationService.getValue<boolean>('weencode.physics');
+			this.sessionOverride = !configValue;
+		} else {
+			this.sessionOverride = !this.sessionOverride;
+		}
+		this.updatePhysicsState();
+	}
+
+	public static getInstance(): PhysicsContribution | null {
+		return PhysicsContribution.instance;
+	}
+
 	private updatePhysicsState(): void {
-		const enabled = this.configurationService.getValue<boolean>('weencode.physics');
+		const enabled = this.sessionOverride !== null
+			? this.sessionOverride
+			: this.configurationService.getValue<boolean>('weencode.physics');
 
 		if (enabled && !this.enabled) {
 			this.enablePhysics();
@@ -361,6 +383,9 @@ class PhysicsContribution extends Disposable implements IWorkbenchContribution {
 			this.settingsObserver.disconnect();
 			this.settingsObserver = null;
 		}
+		if (PhysicsContribution.instance === this) {
+			PhysicsContribution.instance = null;
+		}
 		super.dispose();
 	}
 
@@ -452,3 +477,20 @@ import { LifecyclePhase } from '../services/lifecycle/common/lifecycle.js';
 
 Registry.as<IWorkbenchContributionsRegistry>(WorkbenchExtensions.Workbench)
 	.registerWorkbenchContribution(PhysicsContribution, LifecyclePhase.Restored);
+
+registerAction2(class extends Action2 {
+	constructor() {
+		super({
+			id: 'weencode.togglePhysics',
+			title: localize2('togglePhysics', "Physics: Enable/Disable"),
+			f1: true
+		});
+	}
+
+	run(accessor: ServicesAccessor): void {
+		const instance = PhysicsContribution.getInstance();
+		if (instance) {
+			instance.togglePhysics();
+		}
+	}
+});

@@ -315,7 +315,7 @@ configurationRegistry.registerConfiguration({
 		'weencode.physics': {
 			type: 'boolean',
 			default: false,
-			description: localize('weencodePhysics', 'turn on physics (makes UI elements fall and bounce). note: this MIGHT be hard to turn off so be sure to open your weenCode settings json file in a text editor like notepad to you can remove the line that enables it')
+			description: localize('weencodePhysics', 'turn on physics (makes UI elements fall and bounce). note: this MIGHT be hard to turn off so be sure to open your weenCode settings json file in a text editor like notepad to you can remove the line that enables it\n fun fact theres a command palette command that lets you enable or disable physics only for this session')
 		}
 	}
 });
