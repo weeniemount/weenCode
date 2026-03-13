@@ -1,9 +1,9 @@
 {
-  "name": "code-oss-dev",
+  "name": "weencode",
   "version": "1.112.0",
   "distro": "db572686bb6736ac111e0c9a7ac806b166cdcd6e",
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "weenie"
   },
   "license": "MIT",
   "main": "./out/main.js",
@@ -128,7 +128,8 @@
     "vscode-regexpp": "^3.1.0",
     "vscode-textmate": "^9.3.2",
     "yauzl": "^3.0.0",
-    "yazl": "^2.4.3"
+    "yazl": "^2.4.3",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@playwright/cli": "^0.1.1",
