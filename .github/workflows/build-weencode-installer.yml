@@ -2,6 +2,27 @@ name: maketh weenCode installer
 
 on:
   workflow_dispatch:
+    inputs:
+      upload_to_release:
+        description: 'upload to GitHub releases'
+        required: false
+        type: boolean
+        default: false
+      release_tag:
+        description: 'release tag'
+        required: false
+        type: string
+        default: ''
+      release_name:
+        description: 'release name'
+        required: false
+        type: string
+        default: ''
+      release_description:
+        description: 'release description'
+        required: false
+        type: string
+        default: ''
   push:
     branches:
       - main
@@ -20,7 +41,7 @@ jobs:
           node-version: '22.22.0'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --legacy-peer-deps
 
       - name: Install extension dependencies
         run: npm install --prefix extensions/pISSStream
@@ -45,6 +66,195 @@ jobs:
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
         with:
-          name: weenCode-Windows-Installer
+          name: weenCode-Windows-x64-Installer
           path: weenCode-usersetup.exe
           retention-days: 30
+
+  build-linux-deb:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install extension dependencies
+        run: npm install --prefix extensions/pISSStream
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fakeroot dpkg-dev rpm
+
+      - name: Compile source
+        run: npm run compile
+
+      - name: Build Linux x64 package
+        run: npm run gulp vscode-linux-x64
+
+      - name: Prepare DEB package
+        run: npm run gulp vscode-linux-x64-prepare-deb
+
+      - name: Build DEB package
+        run: npm run gulp vscode-linux-x64-build-deb
+
+      - name: Find and rename DEB package
+        run: |
+          DEB_FILE=$(find .build/linux/deb/amd64/deb -name "*.deb" -type f)
+          if [ -n "$DEB_FILE" ]; then
+            cp "$DEB_FILE" weenCode-amd64.deb
+            echo "DEB package created: weenCode-amd64.deb"
+          else
+            echo "Error: DEB package not found"
+            exit 1
+          fi
+
+      - name: Upload DEB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weenCode-Linux-x64-DEB
+          path: weenCode-amd64.deb
+          retention-days: 30
+
+  build-linux-rpm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install extension dependencies
+        run: npm install --prefix extensions/pISSStream
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm
+
+      - name: Compile source
+        run: npm run compile
+
+      - name: Build Linux x64 package
+        run: npm run gulp vscode-linux-x64
+
+      - name: Prepare RPM package
+        run: npm run gulp vscode-linux-x64-prepare-rpm
+
+      - name: Build RPM package
+        run: npm run gulp vscode-linux-x64-build-rpm
+
+      - name: Find and rename RPM package
+        run: |
+          RPM_FILE=$(find .build/linux/rpm/x86_64 -name "*.rpm" -type f | grep -v ".build/linux/rpm/x86_64/rpmbuild")
+          if [ -n "$RPM_FILE" ]; then
+            cp "$RPM_FILE" weenCode-x86_64.rpm
+            echo "RPM package created: weenCode-x86_64.rpm"
+          else
+            echo "Error: RPM package not found"
+            exit 1
+          fi
+
+      - name: Upload RPM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weenCode-Linux-x64-RPM
+          path: weenCode-x86_64.rpm
+          retention-days: 30
+
+  build-macos-universal:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install extension dependencies
+        run: npm install --prefix extensions/pISSStream
+
+      - name: Compile source
+        run: npm run compile
+
+      - name: Build macOS x64 package
+        run: npm run gulp vscode-darwin-x64
+
+      - name: Build macOS ARM64 package
+        run: npm run gulp vscode-darwin-arm64
+
+      - name: Create Universal binary
+        run: npm run gulp vscode-darwin-universal
+
+      - name: Create DMG (if available)
+        run: |
+          if [ -d "../VSCode-darwin-universal" ]; then
+            # Create a simple zip archive as DMG creation requires signing
+            cd ../VSCode-darwin-universal
+            zip -r ../vscode/weenCode-macOS-Universal.zip .
+            cd ../vscode
+            echo "Universal package created"
+          else
+            echo "Error: Universal package directory not found"
+            exit 1
+          fi
+
+      - name: Upload macOS Universal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weenCode-macOS-Universal
+          path: weenCode-macOS-Universal.zip
+          retention-days: 30
+
+  upload-to-release:
+    if: ${{ github.event.inputs.upload_to_release == 'true' && github.event.inputs.release_tag != '' }}
+    needs: [build-windows-installer, build-linux-deb, build-linux-rpm, build-macos-universal]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.release_tag }}
+          name: ${{ github.event.inputs.release_name || github.event.inputs.release_tag }}
+          body: ${{ github.event.inputs.release_description || 'Release build of weenCode' }}
+          draft: false
+          prerelease: false
+          files: |
+            artifacts/weenCode-Windows-x64-Installer/weenCode-usersetup.exe
+            artifacts/weenCode-Linux-x64-DEB/weenCode-amd64.deb
+            artifacts/weenCode-Linux-x64-RPM/weenCode-x86_64.rpm
+            artifacts/weenCode-macOS-Universal/weenCode-macOS-Universal.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
