@@ -1,0 +1,50 @@
+name: maketh weenCode installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows-installer:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install extension dependencies
+        run: npm install --prefix extensions/pISSStream
+
+      - name: Compile source
+        run: npm run compile
+
+      - name: Build Windows x64 package
+        run: npm run gulp vscode-win32-x64
+
+      - name: Build Inno updater
+        run: npm run gulp vscode-win32-x64-inno-updater
+
+      - name: Build user setup installer
+        run: npm run gulp vscode-win32-x64-user-setup
+
+      - name: Rename installer
+        run: |
+          Copy-Item ".build\win32-x64\user-setup\VSCodeSetup.exe" "weenCode-usersetup.exe"
+        shell: pwsh
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: weenCode-Windows-Installer
+          path: weenCode-usersetup.exe
+          retention-days: 30
