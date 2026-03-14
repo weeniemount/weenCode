@@ -170,10 +170,7 @@ class HappyHolidaysAction extends Action2 {
 			id: HappyHolidaysAction.ID,
 			title: localize2('happyHolidays', 'Happy Holidays!'),
 			category: localize2('help', 'Help'),
-			f1: true,
-			menu: {
-				id: MenuId.CommandPalette
-			}
+			f1: true
 		});
 	}
 
