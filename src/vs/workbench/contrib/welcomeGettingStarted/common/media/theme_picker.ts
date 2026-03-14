@@ -10,11 +10,15 @@ import { ThemeSettingDefaults } from '../../../../services/themes/common/workben
 export default () => `
 <checklist>
 	<div class="theme-picker-row">
-		<checkbox when-checked="setTheme:${ThemeSettingDefaults.COLOR_THEME_DARK}" checked-on="config.workbench.colorTheme == '${ThemeSettingDefaults.COLOR_THEME_DARK}'">
+		<checkbox when-checked="setTheme:Simple Orange" checked-on="config.workbench.colorTheme == 'Simple Orange'">
+			<img width="200" src="./dark.png"/>
+			${escape(localize('simpleOrange', "Simple Orange"))}
+		</checkbox>
+		<checkbox when-checked="setTheme:Default Dark Modern" checked-on="config.workbench.colorTheme == 'Default Dark Modern'">
 			<img width="200" src="./dark.png"/>
 			${escape(localize('dark', "Dark Modern"))}
 		</checkbox>
-		<checkbox when-checked="setTheme:${ThemeSettingDefaults.COLOR_THEME_LIGHT}" checked-on="config.workbench.colorTheme == '${ThemeSettingDefaults.COLOR_THEME_LIGHT}'">
+		<checkbox when-checked="setTheme:Default Light Modern" checked-on="config.workbench.colorTheme == 'Default Light Modern'">
 			<img width="200" src="./light.png"/>
 			${escape(localize('light', "Light Modern"))}
 		</checkbox>

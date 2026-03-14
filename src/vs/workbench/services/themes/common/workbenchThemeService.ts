@@ -42,7 +42,7 @@ export enum ThemeSettings {
 const isOSS = !product.quality;
 
 export namespace ThemeSettingDefaults {
-	export const COLOR_THEME_DARK = isOSS ? 'Experimental Dark' : 'Default Dark Modern';
+	export const COLOR_THEME_DARK = 'Simple Orange';
 	export const COLOR_THEME_LIGHT = isOSS ? 'Experimental Light' : 'Default Light Modern';
 	export const COLOR_THEME_HC_DARK = 'Default High Contrast';
 	export const COLOR_THEME_HC_LIGHT = 'Default High Contrast Light';
