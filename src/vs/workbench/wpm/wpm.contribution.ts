@@ -133,7 +133,7 @@ Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration)
 		properties: {
 			'weencode.wpm': {
 				type: 'boolean',
-				default: false,
+				default: true,
 				description: localize('weencodeWpm', 'show typing speed (WPM) in the status bar')
 			},
 			'weencode.wpmResetOnNewline': {
