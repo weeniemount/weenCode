@@ -8,7 +8,7 @@ import { $, append, scheduleAtNextAnimationFrame } from '../../base/browser/dom.
 import { Event } from '../../base/common/event.js';
 import { DomEmitter } from '../../base/browser/event.js';
 import { IDisposable, toDisposable, dispose, Disposable } from '../../base/common/lifecycle.js';
-import { registerAction2, Action2, MenuId } from '../../platform/actions/common/actions.js';
+import { registerAction2, Action2 } from '../../platform/actions/common/actions.js';
 import { IThemeService } from '../../platform/theme/common/themeService.js';
 import { ServicesAccessor, IInstantiationService } from '../../platform/instantiation/common/instantiation.js';
 import { localize, localize2 } from '../../nls.js';
