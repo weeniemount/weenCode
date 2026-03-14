@@ -452,3 +452,6 @@ import './oneko/oneko.contribution.js';
 
 // physics
 import './physics/physics.contribution.js';
+
+// codesnake
+import './codesnake/codesnake.contribution.js';
