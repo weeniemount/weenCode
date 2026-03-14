@@ -32,4 +32,7 @@ run({
 	},
 	srcDir,
 	outdir: outDir,
+	additionalOptions: {
+		external: ['vscode', 'file-type'],
+	},
 }, process.argv, copyNonTsFiles);

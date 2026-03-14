@@ -10,8 +10,7 @@ import * as cp from 'child_process';
 import { fileURLToPath } from 'url';
 import which from 'which';
 import { EventEmitter } from 'events';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const fileTypeFromBuffer: (buf: Buffer) => Promise<{ ext: string; mime: string } | undefined> = require('file-type').fromBuffer;
+import { fileTypeFromBuffer } from 'file-type';
 import { assign, groupBy, IDisposable, toDisposable, dispose, mkdirp, readBytes, detectUnicodeEncoding, Encoding, onceEvent, splitInChunks, Limiter, Versions, isWindows, pathEquals, isMacintosh, isDescendant, relativePathWithNoFallback, Mutable } from './util';
 import { CancellationError, CancellationToken, ConfigurationChangeEvent, LogOutputChannel, Progress, Uri, workspace } from 'vscode';
 import type { Commit as ApiCommit, Ref, Branch, Remote, LogOptions, Change, CommitOptions, RefQuery as ApiRefQuery, InitOptions, DiffChange, Worktree as ApiWorktree } from './api/git';
