@@ -66,6 +66,12 @@
         "label": "Hotdog Stand",
         "uiTheme": "vs-dark",
         "path": "./themes/hotdog_stand.json"
+      },
+      {
+        "id": "Simple Orange",
+        "label": "Simple Orange by alexsuriano",
+        "uiTheme": "vs-dark",
+        "path": "./themes/simple_orange.json"
       }
     ],
     "iconThemes": [

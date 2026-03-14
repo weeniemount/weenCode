@@ -16,3 +16,6 @@ you can also find google balls
 [vscode-icons](https://open-vsx.org/extension/vscode-icons-team/vscode-icons)
 
 licenses for both can be found in [LICENSE.txt](LICENSE.txt)
+
+## bundled themes
+[Simple Orange](https://themes.vscode.one/theme/alexsuriano/oXnK6FLi) by user "alexsuriano"
