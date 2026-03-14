@@ -88,6 +88,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install extension dependencies
         run: npm install --prefix extensions/pISSStream
@@ -141,6 +143,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install extension dependencies
         run: npm install --prefix extensions/pISSStream
