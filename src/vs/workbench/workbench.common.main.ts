@@ -455,3 +455,6 @@ import './physics/physics.contribution.js';
 
 // codesnake
 import './codesnake/codesnake.contribution.js';
+
+// wpm
+import './wpm/wpm.contribution.js';
