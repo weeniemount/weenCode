@@ -27,8 +27,6 @@ on:
 jobs:
   build-windows-installer:
     runs-on: windows-latest
-    # also disabled
-    if: false
 
     steps:
       - name: Checkout code
@@ -39,27 +37,46 @@ jobs:
         with:
           node-version: '22.22.0'
 
+      - name: Install Visual Studio Build Tools
+        run: |
+          winget install --id Microsoft.VisualStudio.2022.BuildTools -e --source winget --override "--add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.Runtimes.x86.x64.Spectre --add Microsoft.VisualStudio.Component.VC.ATL.Spectre --add Microsoft.VisualStudio.Component.VC.ATLMFC.Spectre" --accept-package-agreements --accept-source-agreements
+        shell: pwsh
+
+      - name: Set msvs_version
+        run: npm config set msvs_version 2022
+        shell: pwsh
+
+      - name: Install Python setuptools
+        run: pip install setuptools
+        shell: pwsh
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install extension dependencies
         run: npm install --prefix extensions/pISSStream
+        shell: pwsh
 
       - name: Compile source
         run: npm run compile
+        shell: pwsh
 
       - name: Build Windows x64 package
         run: npm run gulp vscode-win32-x64
+        shell: pwsh
 
       - name: Build Inno updater
         run: npm run gulp vscode-win32-x64-inno-updater
+        shell: pwsh
 
       - name: Build user setup installer
         run: npm run gulp vscode-win32-x64-user-setup
+        shell: pwsh
 
       - name: Rename installer
-        run: |
-          Copy-Item ".build\win32-x64\user-setup\VSCodeSetup.exe" "weenCode-usersetup.exe"
+        run: Copy-Item ".build\win32-x64\user-setup\VSCodeSetup.exe" "weenCode-usersetup.exe"
         shell: pwsh
 
       - name: Upload installer artifact
@@ -233,7 +250,7 @@ jobs:
 
   upload-to-release:
     if: ${{ github.event.inputs.upload_to_release == 'true' && github.event.inputs.release_tag != '' }}
-    needs: [build-linux-deb, build-linux-rpm]
+    needs: [build-windows-installer, build-linux-deb, build-linux-rpm]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -257,6 +274,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
+            artifacts/weenCode-Windows-x64-Installer/weenCode-usersetup.exe
             artifacts/weenCode-Linux-x64-DEB/weenCode-amd64.deb
             artifacts/weenCode-Linux-x64-RPM/weenCode-x86_64.rpm
         env:
