@@ -34,7 +34,6 @@ class CodeSnakeGame {
 	private score = 0;
 	private gameOver = false;
 	private keyListener: any = null;
-	private inputBuffer = '';
 
 	constructor(
 		private editorService: IEditorService,

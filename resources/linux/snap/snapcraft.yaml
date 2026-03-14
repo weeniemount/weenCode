@@ -1,10 +1,8 @@
 name: @@NAME@@
 version: '@@VERSION@@'
-summary: Code editing. Redefined.
+summary: Code Editing.... maybe not redefined.
 description: |
-  weenCode is a new choice of tool that combines the
-  simplicity of a code editor with what developers need for the core
-  edit-build-debug cycle.
+  weenCode is an editor for code. i guess.
 
 architectures:
   - build-on: amd64

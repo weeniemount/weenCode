@@ -5,9 +5,9 @@
 	<project_license>@@LICENSE@@</project_license>
 	<name>@@NAME_LONG@@</name>
 	<url type="homepage">https://github.com/weeniemount/weencode</url>
-	<summary>weenCode. Code editing. Redefined.</summary>
+	<summary>weenCode. Code Editing.... maybe not redefined.</summary>
 	<description>
-		<p>weenCode is a new choice of tool that combines the simplicity of a code editor with what developers need for the core edit-build-debug cycle. See https://code.visualstudio.com/docs/setup/linux for installation instructions and FAQ.</p>
+		<p>weenCode is an editor for code. i guess.</p>
 	</description>
 	<screenshots>
 		<screenshot type="default">
