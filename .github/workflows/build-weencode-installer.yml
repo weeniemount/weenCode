@@ -58,6 +58,8 @@ jobs:
       - name: Build Windows x64 package
         run: npm run gulp vscode-win32-x64
         shell: pwsh
+        env:
+          npm_config_legacy_peer_deps: 'true'
 
       - name: Build Inno updater
         run: npm run gulp vscode-win32-x64-inno-updater
