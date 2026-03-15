@@ -8,10 +8,10 @@
 AppId={#AppId}
 AppName={#NameLong}
 AppVerName={#NameVersion}
-AppPublisher=Microsoft Corporation
-AppPublisherURL=https://code.visualstudio.com/
-AppSupportURL=https://code.visualstudio.com/
-AppUpdatesURL=https://code.visualstudio.com/
+AppPublisher=weenie
+AppPublisherURL=https://github.com/weeniemount/weenCode
+AppSupportURL=https://github.com/weeniemount/weenCode
+AppUpdatesURL=https://github.com/weeniemount/weenCode
 DefaultGroupName={#NameLong}
 AllowNoIcons=yes
 OutputDir={#OutputDir}
