@@ -22,6 +22,16 @@ function getNpmProductionDependencies(folder: string): string[] {
 				continue;
 			} else if (/invalid: xterm/.test(match[0])) {
 				continue;
+			} else if (/invalid: typescript/.test(match[0])) {
+				continue;
+			} else if (/invalid: node-addon-api/.test(match[0])) {
+				continue;
+			} else if (/invalid: serialize-javascript/.test(match[0])) {
+				continue;
+			} else if (/invalid: picomatch/.test(match[0])) {
+				continue;
+			} else if (/missing:/.test(match[0])) {
+				continue;
 			} else if (/A complete log of this run/.test(match[0])) {
 				continue;
 			} else {
