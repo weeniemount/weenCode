@@ -27,6 +27,7 @@ on:
 jobs:
   build-windows-installer:
     runs-on: windows-latest
+    if: false
 
     steps:
       - name: Checkout code
@@ -244,7 +245,7 @@ jobs:
 
   upload-to-release:
     if: ${{ github.event.inputs.upload_to_release == 'true' && github.event.inputs.release_tag != '' }}
-    needs: [build-windows-installer, build-linux-deb, build-linux-rpm]
+    needs: [build-linux-deb, build-linux-rpm]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -268,7 +269,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/weenCode-Windows-x64-Installer/weenCode-usersetup.exe
             artifacts/weenCode-Linux-x64-DEB/weenCode-amd64.deb
             artifacts/weenCode-Linux-x64-RPM/weenCode-x86_64.rpm
         env:
