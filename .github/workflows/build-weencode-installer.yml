@@ -37,10 +37,6 @@ jobs:
         with:
           node-version: '22.22.0'
 
-      - name: Set msvs_version
-        run: npm config set msvs_version 2022
-        shell: pwsh
-
       - name: Install Python setuptools
         run: pip install setuptools
         shell: pwsh
@@ -49,6 +45,7 @@ jobs:
         run: npm ci --legacy-peer-deps
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm_config_msvs_version: '2022'
 
       - name: Install extension dependencies
         run: npm install --prefix extensions/pISSStream
